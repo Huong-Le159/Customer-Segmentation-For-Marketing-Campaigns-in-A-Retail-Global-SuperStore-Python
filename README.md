@@ -29,4 +29,10 @@ SuperStore is a global retail company with a large customer base. To celebrate C
 | CustomerID      | INT           | Unique identifier for each customer.               |
 | Country         | TEXT          | Country where the transaction took place.          |
 
+## III.Python Analysis
+### 3. Applying RFM model to release marketing campaign for loyal customer to give Thank you letter
+#### 3.1. Distribution customer volume and spending by segmentation
+<img width="1310" height="734" alt="image" src="https://github.com/user-attachments/assets/6377a871-cc5c-4fef-8229-906c73ac9234" />
+
+
 
