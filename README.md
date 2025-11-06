@@ -15,7 +15,7 @@ SuperStore is a global retail company with a large customer base. To celebrate C
 ### 2. Business Questions
 - The marketing department proposed a plan using RFM model (Recency, Frequency, Monatery) in Python to segment customer, then launch marketing campaigns to give thank you letter to loyal customer, exploit potential customer to become loyal customer.
 - Suggest to the Marketing and Sales team with the company's retail model, which of the three indicators R, F, M should be most interested in?
----
+
 ## II.Dataset
 | **Column Name** | **Data Type** | **Description**                                    |
 | --------------- | ------------- | -------------------------------------------------- |
