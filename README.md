@@ -2,6 +2,7 @@
 <div align="center">
   <img width="500" height="399" alt="image" src="https://github.com/user-attachments/assets/8e3e23fc-8905-4db6-bbe2-3e92b94ad6c3" />
 </div>   
+
  ---
 ## I. Overview 
 SuperStore is a global retail company with a large customer base. To celebrate Christmas and New Year, the Marketing department wants to launch to show appreciation to loyal customers who have supported the company over the years, as well as to engage potential customers who could become loyal clients.
