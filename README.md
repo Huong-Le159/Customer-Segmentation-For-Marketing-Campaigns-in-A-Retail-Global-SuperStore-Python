@@ -1,5 +1,5 @@
 # [PYTHON] Customer Segmentation with RFM Analysis
-<img width="500" height="399" alt="image" src="https://github.com/user-attachments/assets/8e3e23fc-8905-4db6-bbe2-3e92b94ad6c3" />
+<img width="500" height="399" alt="image" src="https://github.com/user-attachments/assets/8e3e23fc-8905-4db6-bbe2-3e92b94ad6c3" />, center
 
  ---
 ## I. Overview 
