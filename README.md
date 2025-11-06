@@ -1,10 +1,5 @@
 # [PYTHON] Customer Segmentation with RFM Analysis
  ---
-## 📑 Table of Contents  
-1. [📌Overview](#-background--overview)  
-2. [📂 Dataset](#-dataset-description--data-structure)  
-3. [🔎 Final Conclusion & Recommendations](#-final-conclusion--recommendations)
----
 ## I. Overview 
 SuperStore is a global retail company with a large customer base. To celebrate Christmas and New Year, the Marketing department wants to launch to show appreciation to loyal customers who have supported the company over the years, as well as to engage potential customers who could become loyal clients.
 ### 1. About RFM Analysis
