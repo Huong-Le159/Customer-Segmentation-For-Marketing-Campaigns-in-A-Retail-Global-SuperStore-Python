@@ -122,7 +122,8 @@ print('')
   <img width="807" height="474" alt="image" src="https://github.com/user-attachments/assets/55ffdf58-bf75-494f-99ec-e55b665ad8e5" />
 </details>
 
-### ⚡ Key Findings
+<details>
+<summary> <strong>⚡ Key Findings</strong></summary>
 
 #### 1. Invalid Numerical Values
 During initial data exploration, it was observed that the **Quantity** and **UnitPrice** columns contain **negative values**.  
@@ -152,3 +153,4 @@ A manual review is recommended to:
 - Identify and flag incorrect descriptions  
 - Classify them as errors  
 - Prepare them for cleaning or exclusion in subsequent processing steps
+</details>
