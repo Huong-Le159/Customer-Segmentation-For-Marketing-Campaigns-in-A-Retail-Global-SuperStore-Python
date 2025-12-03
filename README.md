@@ -203,3 +203,70 @@ df = df[df['Quantity'] > 0]
 df = df.replace('nan',None)
 df.shape
 ```
+</details>
+
+<details>
+<summary> <strong>Step 3. Checking Missing Values in CustomerID & Error Columns</strong></summary>
+  
+[In 1]: 
+```python
+#List out missing data
+print('List out missing data')
+missing_data = {'volume': df.isnull().sum(), 'percent':df.isnull().sum()/df.shape[0]}
+missing_df = pd.DataFrame.from_dict(missing_data, orient='index')
+missing_df.head()
+```
+
+<details>
+<summary>[Out 1]:</summary>
+  
+<img width="1149" height="154" alt="image" src="https://github.com/user-attachments/assets/028bf1dd-379e-4a8f-8eaa-e4038c45fdcc" />
+</details>
+
+[In 2]: 
+```python
+#Detect reasons about missing data (CustomerID)
+print(df[df.CustomerID.isnull()].head())
+print('')
+print(df[df.CustomerID.isnull()].tail())
+df['Day'] = pd.to_datetime(df['InvoiceDate']).dt.date
+df['Month'] = df['Day'].apply(lambda x: str(x)[:7]) #Fixed to get the correct month format
+df_group_day = df[df.CustomerID.isnull()][['Month','InvoiceNo']].groupby(['Month']).count().reset_index().sort_values(by=['Month'], ascending = True)
+df_group_day.head()
+```
+
+<details>
+<summary>[Out 2]:</summary>
+  
+<img width="851" height="832" alt="image" src="https://github.com/user-attachments/assets/39671e67-f7ff-443f-92dd-6f3dfdc3dc70" />
+</details>
+
+[In 3]: 
+```python
+#Handle missing data
+#drop missing data
+df = df[df['CustomerID'].notnull()]
+df.head()
+```
+
+<details>
+<summary>[Out 3]:</summary>
+
+<img width="1622" height="238" alt="image" src="https://github.com/user-attachments/assets/9ebf99de-ca7d-4719-9a28-9d04c701f90e" />
+</details>
+
+### 🔍 Investigating Missing CustomerID
+
+Before executing the code: It is important to check if the missing **CustomerID** is concentrated in specific countries or time periods before deciding how to handle it.
+
+#### 🧐 Key Findings:
+- **Missing CustomerID** values are **spread across all months & countries**, not just a specific region or time period.
+- Likely due to **human errors** (e.g., incomplete updates) or **system recording issues**.
+
+#### Hypothesis:
+- **Missing CustomerID** might be concentrated in the **United Kingdom** or could be **distributed evenly** across all countries.
+- These missing **CustomerID** values could be limited to specific **time periods** or may be **spread evenly** across the months.
+
+#### ✅ Solution: 
+Since **CustomerID is essential**, drop missing values to maintain data integrity.
+</details>
