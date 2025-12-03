@@ -124,7 +124,7 @@ print('')
 
 ### ⚡ Key Findings
 
-#### 1. **Invalid Numerical Values**
+#### 1. Invalid Numerical Values
 During initial data exploration, it was observed that the **Quantity** and **UnitPrice** columns contain **negative values**.  
 These values are not logically valid for retail transactions and require further investigation.
 **Possible actions:**
@@ -132,7 +132,7 @@ These values are not logically valid for retail transactions and require further
 - Check for **data entry errors**.
 - Remove or correct invalid records to ensure accurate analysis.
   
-#### 2. **Stock Code vs. Description Mismatch**
+#### 2. Stock Code vs. Description Mismatch
 A mismatch was detected between:
 - **StockCode count:** 4,070  
 - **Description count:** 4,223  
@@ -146,7 +146,7 @@ This discrepancy indicates potential data quality issues.
 **Recommendation:**  
 Perform additional validation and cleaning to ensure consistency and reliability in downstream analysis.
 
-### ⚠ Manual Review Required
+#### 3. Manual Review Required
 Certain orders contain **incorrect or inconsistent product descriptions**.  
 A manual review is recommended to:
 - Identify and flag incorrect descriptions  
