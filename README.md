@@ -41,4 +41,71 @@ RFM (Recency, Frequency, Monetary) is a customer analytics technique used to eva
 
 By applying RFM, businesses can segment customers based on their value, allowing them to personalize campaigns, prioritize high-value groups, and improve customer engagement strategies.
 
+## 📂 Dataset Description & Data Structure
 
+### **📌 Data Source** 
+- **Source:** Provided dataset for E-commerce retail analysis  
+- **Size:** **541,910** rows × **8** columns (Sheet 1: *E-commerce Retail*). Additional segmentation details in Sheet 2  
+- **Format:** `.xlsx` (Excel file with **two** sheets)
+
+### 📊 **Data Structure**  
+The dataset consists of **two tables (sheets):**
+- **Sheet 1 – E-commerce Retail:** Transaction-level records (order details, customer IDs, purchase info)  
+<details>
+<summary><strong>📁 Dataset Schema</strong></summary>
+
+| Column Name  | Data Type       | Description                                                                 |
+|--------------|-----------------|------------------------------------------------------------------------------|
+| `InvoiceNo`  | `object`        | Unique invoice number for each transaction (6-digit). If it starts with `C`, it indicates a **cancellation**. |
+| `StockCode`  | `object`        | Unique product (item) code (5-digit).                                       |
+| `Description`| `object`        | Product (item) name.                                                         |
+| `Quantity`   | `int64`         | Number of units purchased per transaction.                                   |
+| `InvoiceDate`| `datetime64[ns]`| Date and time when the transaction occurred.                                 |
+| `UnitPrice`  | `float64`       | Price per unit of the product (GBP).                                         |
+| `CustomerID` | `float64`       | Unique **5-digit** identifier for each customer.                             |
+| `Country`    | `object`        | Country where the customer resides.                                          |
+</details>
+
+- **Sheet 2 – Segmentation:** Customer segments with their **RFM** scores 
+<details>
+<summary><strong>📊 RFM Segmentation Mapping</strong></summary>
+
+| Segment               | RFM Score                                                                                                                                                                  |
+|----------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Champions**        | 555, 554, 544, 545, 454, 455, 445                                                                                                                                            |
+| **Loyal**            | 543, 444, 435, 355, 354, 345, 344, 335                                                                                                                                        |
+| **Potential Loyalist** | 553, 551, 552, 541, 542, 533, 532, 531, 452, 451, 442, 441, 431, 453, 433, 432, 423, 353, 352, 351, 342, 341, 333, 323                                                       |
+| **New Customers**    | 512, 511, 422, 421, 412, 411, 311                                                                                                                                            |
+| **Promising**        | 525, 524, 523, 522, 521, 515, 514, 513, 425, 424, 413, 414, 415, 315, 314, 313                                                                                                |
+| **Need Attention**   | 535, 534, 443, 434, 343, 334, 325, 324                                                                                                                                        |
+| **About To Sleep**   | 331, 321, 312, 221, 213, 231, 241, 251                                                                                                                                        |
+| **At Risk**          | 255, 254, 245, 244, 253, 252, 243, 242, 235, 234, 225, 224, 153, 152, 145, 143, 142, 135, 134, 133, 125, 124                                                                  |
+| **Cannot Lose Them** | 155, 154, 144, 214, 215, 115, 114, 113                                                                                                                                        |
+| **Hibernating Customers** | 332, 322, 233, 232, 223, 222, 132, 123, 122, 212, 211                                                                                                                   |
+| **Lost Customers**   | 111, 112, 121, 131, 141, 151 
+</details>
+
+## 🧹 Data Cleaning & Preprocessing
+[In 1]: 
+```python
+#Print the first five rows of dataset
+df=pd.read_excel(path+'ecommerce retail.xlsx',sheet_name = 'ecommerce retail')
+df.head()
+```
+<details>
+  <summary>[Out 1]:</summary>
+  
+  <img width="1289" height="252" alt="image" src="https://github.com/user-attachments/assets/b40f8f8b-afde-4c80-afb1-f16f60063210" />
+</details>
+
+[In 2]: 
+```python
+#Check the general information of df
+print(df.info())
+print('')
+```
+<details>
+  <summary>[Out 2]:</summary>
+  
+  <img width="624" height="324" alt="image" src="https://github.com/user-attachments/assets/48647d2b-55a7-4353-88c9-b957fe4533f9" />
+</details>
