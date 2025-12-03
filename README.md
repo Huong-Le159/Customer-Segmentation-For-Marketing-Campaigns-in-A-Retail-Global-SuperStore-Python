@@ -130,14 +130,15 @@ print('')
   <img width="807" height="474" alt="image" src="https://github.com/user-attachments/assets/55ffdf58-bf75-494f-99ec-e55b665ad8e5" />
 </details>
 
-⚡ Key Findings
+### ⚡ Key Findings
 
-#### 1. Invalid Numerical Values
-During initial data exploration, it was observed that the **Quantity** and **UnitPrice** columns contain **negative values**.  
+### 1. Invalid Numerical Values
+During initial data exploration, it was observed that the Quantity and UnitPrice columns contain negative values.  
 These values are not logically valid for retail transactions and require further investigation.
+
 **Possible actions:**
-- Verify whether negative values represent **refunds or cancellations**.
-- Check for **data entry errors**.
+- Verify whether negative values represent refunds or cancellations.
+- Check for data entry errors.
 - Remove or correct invalid records to ensure accurate analysis.
   
 #### 2. Stock Code vs. Description Mismatch
@@ -168,4 +169,5 @@ Data Values:
 - Quantity < 0 & InvoiceNo starts with 'C' → These transactions indicate canceled orders and should be removed from the dataset.
 - Quantity < 0 but InvoiceNo does NOT start with 'C' → These records contain incorrect descriptions and should be excluded from the dataset.
 - UnitPrice < 0 & incorrect Description → These are invalid transactions and should also be removed from the dataset.
-</details>
+
+🔍 Exploratory Data Analysis (EDA)
