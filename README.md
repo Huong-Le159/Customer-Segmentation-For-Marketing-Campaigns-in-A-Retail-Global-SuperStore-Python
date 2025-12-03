@@ -109,3 +109,46 @@ print('')
   
   <img width="624" height="324" alt="image" src="https://github.com/user-attachments/assets/48647d2b-55a7-4353-88c9-b957fe4533f9" />
 </details>
+
+[In 3]: 
+```python
+#Check data sumary
+print(df.describe())
+print('')
+```
+<details>
+  <summary>[Out 3]:</summary>
+  
+  <img width="807" height="474" alt="image" src="https://github.com/user-attachments/assets/55ffdf58-bf75-494f-99ec-e55b665ad8e5" />
+</details>
+
+### ⚡ Key Findings
+
+#### 1. **Invalid Numerical Values**
+During initial data exploration, it was observed that the **Quantity** and **UnitPrice** columns contain **negative values**.  
+These values are not logically valid for retail transactions and require further investigation.
+**Possible actions:**
+- Verify whether negative values represent **refunds or cancellations**.
+- Check for **data entry errors**.
+- Remove or correct invalid records to ensure accurate analysis.
+  
+#### 2. **Stock Code vs. Description Mismatch**
+A mismatch was detected between:
+- **StockCode count:** 4,070  
+- **Description count:** 4,223  
+This discrepancy indicates potential data quality issues.
+
+**Possible reasons:**
+- Multiple descriptions may exist for the same stock code.
+- Some descriptions may not be linked to a valid stock code.
+- Missing, duplicated, or improperly recorded stock codes.
+  
+**Recommendation:**  
+Perform additional validation and cleaning to ensure consistency and reliability in downstream analysis.
+
+### ⚠ Manual Review Required
+Certain orders contain **incorrect or inconsistent product descriptions**.  
+A manual review is recommended to:
+- Identify and flag incorrect descriptions  
+- Classify them as errors  
+- Prepare them for cleaning or exclusion in subsequent processing steps
