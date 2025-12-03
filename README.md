@@ -12,7 +12,7 @@
 
 ---
 
-## 📌 Background & Overview
+## 1. 📌Background & Overview
 
 **Objective:**
 
@@ -41,7 +41,7 @@ RFM (Recency, Frequency, Monetary) is a customer analytics technique used to eva
 
 By applying RFM, businesses can segment customers based on their value, allowing them to personalize campaigns, prioritize high-value groups, and improve customer engagement strategies.
 
-## 📂 Dataset Description & Data Structure
+## 2. 📂Dataset Description & Data Structure
 
 ### **📌 Data Source** 
 - **Source:** Provided dataset for E-commerce retail analysis  
@@ -85,7 +85,7 @@ The dataset consists of **two tables (sheets):**
 | **Lost Customers**   | 111, 112, 121, 131, 141, 151 
 </details>
 
-## 🧹 Data Cleaning & Preprocessing
+## 3.🧹Data Cleaning & Preprocessing
 <details>
 <summary> <strong>Print the first five rows of dataset</strong></summary>
   
@@ -172,9 +172,9 @@ Data Values:
 - UnitPrice < 0 & incorrect Description → These are invalid transactions and should also be removed from the dataset.
 </details>
 
-## 🔍 Exploratory Data Analysis (EDA)
+## 4.🔍Exploratory Data Analysis (EDA)
 <details>
-<summary> <strong>Step 1. Convert to correct Data type</strong></summary>
+<summary> <strong>🛠 Step 1. Convert to correct Data type</strong></summary>
   
 [In]: 
 ```python
@@ -190,7 +190,7 @@ df.info()
 </details>
 
 <details>
-<summary> <strong>Step 2. Remove Invalid Transactions</strong></summary>
+<summary> <strong>🛠 Step 2. Remove Invalid Transactions</strong></summary>
 
 [In]: 
 ```python
@@ -206,7 +206,7 @@ df.shape
 </details>
 
 <details>
-<summary> <strong>Step 3. Checking Missing Values in CustomerID & Error Columns</strong></summary>
+<summary> <strong>🛠 Step 3. Checking Missing Values in CustomerID & Error Columns</strong></summary>
   
 [In 1]: 
 ```python
@@ -270,3 +270,145 @@ Before executing the code: It is important to check if the missing **CustomerID*
 #### ✅ Solution: 
 Since **CustomerID is essential**, drop missing values to maintain data integrity.
 </details>
+
+<details>
+<summary> <strong> 🛠 Step 4. Handle duplicate</strong></summary>
+
+[In 1]: 
+```python
+#List out duplicated data
+df_duplication = df.duplicated(subset=['InvoiceNo','StockCode','InvoiceDate','CustomerID'])
+print(df[df_duplication].shape)
+print('')
+print(df.shape)
+```
+
+<details>
+<summary>[Out 1]:</summary>
+  
+<img width="122" height="78" alt="image" src="https://github.com/user-attachments/assets/b801927d-3b7d-4540-a81c-24188ee4207f" />
+</details>
+
+[In 2]: 
+```python
+# @title Detect reasons about duplicated data
+print(df[df_duplication].head())
+```
+
+<details>
+<summary>[Out 2]:</summary>
+  
+<img width="817" height="442" alt="image" src="https://github.com/user-attachments/assets/4ef1102d-f202-4fa0-a43f-f5d16f4a8d2c" />
+</details>
+
+[In 3]: 
+```python
+#Handle duplicated data
+df_drop_dup = df.drop_duplicates(subset=['InvoiceNo','StockCode','InvoiceDate','CustomerID'],keep = 'first')
+df_drop_dup.shape
+```
+
+<details>
+<summary>[Out 3]:</summary>
+
+<img width="145" height="48" alt="image" src="https://github.com/user-attachments/assets/61b55ff4-0d01-440e-b54e-c2dbf7cd2ed7" />
+</details>
+
+The result (10038, 11) means there are 10,038 duplicate rows, and they need to be detected and handled
+**Duplicates with the Same Quantity**:
+   - These duplicates are likely caused by system errors (e.g., duplicate entries with the same quantity).
+   - **Action**: Drop the duplicates because they are identical.
+</details>
+
+## 5. 🧮Apply RFM Model
+#### ✅ Step 1. Calculate RFM Score
+[In]: 
+```python
+#Identify last day
+last_day = df_drop_dup['InvoiceDate'].max()
+last_day
+#Create RFM_df
+RFM_df = df_drop_dup.groupby('CustomerID').agg(
+    Recency = ('Day',lambda x: (pd.to_datetime(last_day).date() - x.max()).days), # Convert last_day to datetime.date
+    Frequency = ('CustomerID','count'),
+    Monetary = ('Cost','sum'),
+    Start_Day = ('Day','min')).reset_index()
+RFM_df.info()
+```
+
+<details>
+<summary>[Out]:</summary>
+  
+<img width="398" height="270" alt="image" src="https://github.com/user-attachments/assets/e95502ee-8f78-49e2-b272-756fba878c8e" />
+</details>
+
+#### ✅ Step 2. Check outlier
+[In]: 
+```python
+# Create a figure with 1 row and 3 columns
+fig, axes = plt.subplots(1, 3, figsize=(18, 5))
+
+# Plot Recency on the first chart (index 0)
+sns.boxplot(data=RFM_df, x='Recency', ax=axes[0])
+axes[0].set_title('Recency Outliers')
+
+# Plot Monetary on the second chart (index 1)
+sns.boxplot(data=RFM_df, x='Monetary', ax=axes[1])
+axes[1].set_title('Monetary Outliers')
+
+# Plot Frequency on the third chart (index 2)
+sns.boxplot(data=RFM_df, x='Frequency', ax=axes[2])
+axes[2].set_title('Frequency Outliers')
+
+# Adjust spacing between charts
+plt.tight_layout()
+plt.show()
+```
+
+[Out]: 
+
+<img width="2291" height="609" alt="image" src="https://github.com/user-attachments/assets/18a974ce-4bc9-4356-bef8-ad097ce6cadf" />
+
+📌 **Solution:** We set a 95% threshold for **Recency**, **Frequency**, and **Monetary** to remove extreme values (outliers) from the dataset. This ensures that the analysis focuses on the majority of the data, improving its reliability for further insights.
+
+#### ✅ Step  3. Assign RFM scores using Qcut
+[In]: 
+```python
+#Create R, F, M (using qcut)
+RFM_df['R'] = pd.qcut(RFM_df['Recency'],5,labels = range(1,6)).astype(str)
+RFM_df['F'] = pd.qcut(RFM_df['Frequency'],5,labels = range(1,6)).astype(str)
+RFM_df['M'] = pd.qcut(RFM_df['Monetary'],5,labels = range(1,6)).astype(str)
+RFM_df['RFM'] = RFM_df.apply(lambda x: x.R + x.F + x.M, axis = 1)
+RFM_df.head()
+```
+
+<details>
+<summary>[Out]:</summary> 
+
+<img width="817" height="239" alt="image" src="https://github.com/user-attachments/assets/625c7e96-063c-4963-a592-8ba0f751ac76" />
+</details>
+
+#### ✅ Step  4. Calculate RFM Score and Identify Segmentation
+[In]: 
+```python
+# Flatten the segmentation table by splitting the 'RFM Score' column
+df_seg['RFM Score'] = df_seg['RFM Score'].astype(str).str.split(',')
+df_seg = df_seg.explode('RFM Score').reset_index(drop=True)
+
+# Trim spaces in the 'RFM Score' column to ensure proper merging
+df_seg['RFM Score'] = df_seg['RFM Score'].str.strip()
+
+# Merge the segmentation table with the RFM table based on the 'RFM Score'
+RFM_final = RFM_df.merge(df_seg, how='left', left_on='RFM', right_on='RFM Score')
+
+# Display the final RFM segmentation table
+RFM_final
+```
+
+<details>
+<summary>[Out]:</summary> 
+
+<img width="1146" height="519" alt="image" src="https://github.com/user-attachments/assets/0a00b7e8-dec7-4ad3-814b-0df4cf44bd4a" />
+</details>
+
+## 6. 📊Visualization & Analysis
