@@ -87,7 +87,7 @@ The dataset consists of **two tables (sheets):**
 
 ## 🧹 Data Cleaning & Preprocessing
 <details>
-<summary> <strong>Print the first five rows of dataset</summary>
+<summary> <strong>Print the first five rows of dataset</strong></summary>
   
 [In]: 
 ```python
@@ -102,7 +102,7 @@ df.head()
 </details>
 
 <details>
-<summary> <strong>Check the general information of dataset</summary>
+<summary> <strong>Check the general information of dataset</strong></summary>
   
 [In]: 
 ```python
@@ -116,7 +116,7 @@ print('')
 </details>
 
 <details>
-<summary> <strong>Check data sumamry</summary>
+<summary> <strong>Check data sumamry</strong></summary>
   
 [In]: 
 ```python
@@ -130,10 +130,11 @@ print('')
   <img width="807" height="474" alt="image" src="https://github.com/user-attachments/assets/55ffdf58-bf75-494f-99ec-e55b665ad8e5" />
 </details>
 
-### ⚡ Key Findings
+<details>
+<summary> <strong>⚡ Key Findings</strong></summary>
 
-### 1. Invalid Numerical Values
-During initial data exploration, it was observed that the Quantity and UnitPrice columns contain negative values.  
+#### 1. Invalid Numerical Values
+During initial data exploration, it was observed that the **Quantity** and **UnitPrice** columns contain negative values.  
 These values are not logically valid for retail transactions and require further investigation.
 
 **Possible actions:**
@@ -169,5 +170,36 @@ Data Values:
 - Quantity < 0 & InvoiceNo starts with 'C' → These transactions indicate canceled orders and should be removed from the dataset.
 - Quantity < 0 but InvoiceNo does NOT start with 'C' → These records contain incorrect descriptions and should be excluded from the dataset.
 - UnitPrice < 0 & incorrect Description → These are invalid transactions and should also be removed from the dataset.
+</details>
 
-🔍 Exploratory Data Analysis (EDA)
+## 🔍 Exploratory Data Analysis (EDA)
+<details>
+<summary> <strong>Step 1. Convert to correct Data type</strong></summary>
+  
+[In]: 
+```python
+#Correct data type
+print(df.columns)
+print('')
+
+column_list = ['InvoiceNo','StockCode','Description','CustomerID','Country']
+for c in column_list:
+  df[c] = df[c].astype(str)
+df.info()
+```
+</details>
+
+<details>
+<summary> <strong>Step 2. Remove Invalid Transactions</strong></summary>
+
+[In]: 
+```python
+# @title Handle unsual data value
+#drop data values have price < 0
+df = df[df['UnitPrice'] > 0]
+
+#drop data values have quantity < 0
+df = df[df['Quantity'] > 0]
+df = df.replace('nan',None)
+df.shape
+```
