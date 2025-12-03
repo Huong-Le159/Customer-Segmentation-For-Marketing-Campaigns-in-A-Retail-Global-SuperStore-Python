@@ -86,44 +86,51 @@ The dataset consists of **two tables (sheets):**
 </details>
 
 ## 🧹 Data Cleaning & Preprocessing
-[In 1]: 
+<details>
+<summary> <strong>Print the first five rows of dataset</summary>
+  
+[In]: 
 ```python
 #Print the first five rows of dataset
 df=pd.read_excel(path+'ecommerce retail.xlsx',sheet_name = 'ecommerce retail')
 df.head()
 ```
-<details>
-  <summary>[Out 1]:</summary>
-  
-  <img width="1289" height="252" alt="image" src="https://github.com/user-attachments/assets/b40f8f8b-afde-4c80-afb1-f16f60063210" />
+
+[Out]:  
+
+<img width="1289" height="252" alt="image" src="https://github.com/user-attachments/assets/b40f8f8b-afde-4c80-afb1-f16f60063210" /> 
 </details>
 
-[In 2]: 
+<details>
+<summary> <strong>Check the general information of dataset</summary>
+  
+[In]: 
 ```python
 #Check the general information of df
 print(df.info())
 print('')
 ```
-<details>
-  <summary>[Out 2]:</summary>
+[Out]:
   
   <img width="624" height="324" alt="image" src="https://github.com/user-attachments/assets/48647d2b-55a7-4353-88c9-b957fe4533f9" />
 </details>
 
-[In 3]: 
+<details>
+<summary> <strong>Check data sumamry</summary>
+  
+[In]: 
 ```python
-#Check data sumary
+#Check data summary
 print(df.describe())
 print('')
 ```
-<details>
-  <summary>[Out 3]:</summary>
+
+[Out]:
   
   <img width="807" height="474" alt="image" src="https://github.com/user-attachments/assets/55ffdf58-bf75-494f-99ec-e55b665ad8e5" />
 </details>
 
-<details>
-<summary> <strong>⚡ Key Findings</strong></summary>
+⚡ Key Findings
 
 #### 1. Invalid Numerical Values
 During initial data exploration, it was observed that the **Quantity** and **UnitPrice** columns contain **negative values**.  
@@ -153,4 +160,12 @@ A manual review is recommended to:
 - Identify and flag incorrect descriptions  
 - Classify them as errors  
 - Prepare them for cleaning or exclusion in subsequent processing steps
+
+#### 4. Unsual Data Type
+Data Types: The following columns have inappropriate data types and should be converted to strings for easier processing:
+- InvoiceNo, StockCode, Description, CustomerID, Country.
+Data Values:
+- Quantity < 0 & InvoiceNo starts with 'C' → These transactions indicate canceled orders and should be removed from the dataset.
+- Quantity < 0 but InvoiceNo does NOT start with 'C' → These records contain incorrect descriptions and should be excluded from the dataset.
+- UnitPrice < 0 & incorrect Description → These are invalid transactions and should also be removed from the dataset.
 </details>
